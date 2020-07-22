@@ -112,7 +112,7 @@ def efosc2_pol_phot(folder_path,apermul,fwhm):
 		sources_o = daofind_o(image_data[522:552,535:565])
 		sources_e = daofind_e(image_data[462:492,535:565])
 		
-		if (len(sources_o) < 1 or len(sources_e) < 1):
+		if (sources_o is None or sources_e is None):
 			print("No source detected in",ang_dec[k],"degree image")
 			sys.exit()
 			
