@@ -94,12 +94,12 @@ def efosc2_pol_phot(folder_path,apermul,fwhm):
 		# number of pixels used in the background region that were not
 		# clipped! This is done in a small area near the optical axis.
 		go_bmean, go_bmedian, go_bstd = sigma_clipped_stats(image_data
-			[510:568,520:580],sigma=3.0,iters=5)
+			[510:568,520:580],sigma=3.0,maxiters=5)
 		ge_bmean, ge_bmedian, ge_bstd = sigma_clipped_stats(image_data
-			[446:504,520:580],sigma=3.0,iters=5)
-		mask_o = sigma_clip(image_data[510:568,520:580],sigma=3.0,iters=5,
+			[446:504,520:580],sigma=3.0,maxiters=5)
+		mask_o = sigma_clip(image_data[510:568,520:580],sigma=3.0,maxiters=5,
 			masked=True)
-		mask_e = sigma_clip(image_data[446:504,520:580],sigma=3.0,iters=5,
+		mask_e = sigma_clip(image_data[446:504,520:580],sigma=3.0,maxiters=5,
 			masked=True)
 		ann_area_o = np.ma.MaskedArray.count(mask_o)
 		ann_area_e = np.ma.MaskedArray.count(mask_e)
@@ -212,7 +212,7 @@ def efosc2_pol_phot(folder_path,apermul,fwhm):
 			s_area.append(np.pi*(0.5*apermul*fwhm)**2)
 			j = i%2				
 			fluxbgs[i] = (phot_table['aperture_sum'][i] -
-				aperture.area()*glob_bgm[j])
+				aperture.area*glob_bgm[j])
 			mean_bg[i] = glob_bgm[j]
 			bg_err[i] = glob_bgerr[j]			
 		
@@ -222,9 +222,9 @@ def efosc2_pol_phot(folder_path,apermul,fwhm):
 		zscale = ZScaleInterval(image_data)
 		norm = ImageNormalize(stretch=SqrtStretch(),interval=zscale)
 		image = plt.imshow(image_data,cmap='gray',origin='lower',norm=norm)
-		bg_annulus_o = RectangularAnnulus((550,539),w_in=0,w_out=60,h_out=58,
+		bg_annulus_o = RectangularAnnulus((550,539),w_in=0.1,w_out=60,h_out=58,
 			theta=0)
-		bg_annulus_e = RectangularAnnulus((550,475),w_in=0,w_out=60,h_out=58,
+		bg_annulus_e = RectangularAnnulus((550,475),w_in=0.1,w_out=60,h_out=58,
 			theta=0)
 		bg_annulus_o.plot(color='skyblue',lw=1.5,alpha=0.5)
 		bg_annulus_e.plot(color='lightgreen',lw=1.5,alpha=0.5)
