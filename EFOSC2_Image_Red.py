@@ -109,7 +109,7 @@ def master_bf(masterb):
 		return 0
 	
 	else:
-		raise ValueError("No applicable bias frames!")
+		raise FileNotFoundError("No applicable bias frames!")
 	
 	
 def master_ff(flattype,masterb,masterf):
@@ -199,7 +199,7 @@ def master_ff(flattype,masterb,masterf):
 		return 0
 		
 	else:
-		raise ValueError("No applicable flat frames")
+		raise FileNotFoundError("No applicable flat frames")
 	
 		
 def reduce_file(masterb,masterf,imfile):

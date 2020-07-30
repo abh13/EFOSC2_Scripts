@@ -111,7 +111,7 @@ def efosc2_pol_phot(folder_path,apermul,fwhm):
 		sources_e = daofind_e(image_data[462:492,535:565])
 		
 		if (sources_o is None or sources_e is None):
-			raise ValueError("No source detected in",ang_dec[k],"deg image")
+			raise ValueError("No source detected in image")
 			
 		if len(sources_o) != len(sources_e):
 			raise ValueError("Unequal number of sources in o and e images!")
