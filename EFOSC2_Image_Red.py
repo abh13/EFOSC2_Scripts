@@ -57,8 +57,7 @@ def get_args():
 		return directory,task,flattype,masterb,masterf,imfile
 		
 	else:
-		print("Error in arguments. Check number of arguments for task!")
-		sys.exit()
+		raise ValueError("Check number of arguments for task!")
 
 
 def master_bf(masterb):
@@ -110,8 +109,7 @@ def master_bf(masterb):
 		return 0
 	
 	else:
-		print("No applicable bias frames!")
-		sys.exit()
+		raise ValueError("No applicable bias frames!")
 	
 	
 def master_ff(flattype,masterb,masterf):
@@ -201,8 +199,7 @@ def master_ff(flattype,masterb,masterf):
 		return 0
 		
 	else:
-		print("No applicable flat frames")
-		sys.exit()
+		raise ValueError("No applicable flat frames")
 	
 		
 def reduce_file(masterb,masterf,imfile):
@@ -232,8 +229,7 @@ def reduce_file(masterb,masterf,imfile):
 		return 0
 		
 	else:
-		print("Raw image data is not of initial shape 1030x1030")
-		sys.exit()
+		raise ValueError("Raw image data is not of initial shape 1030x1030")
 	
 	
 def main():

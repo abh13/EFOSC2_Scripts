@@ -390,10 +390,10 @@ def efosc2_cal_sa(folder_path,standard_star_file,mirror_props_file,waveband,
 		zip(*np.percentile(samples_cf, [16, 50, 84],axis=0)))
 
 	print("EFOSC2 PQ Instrumental Polarisation: ")
-	print("""{0}(±{1})*cos(2x + {2}(±{3}))\n""".format(round(p1[0],3),
+	print("{0}(±{1})*cos(2x + {2}(±{3}))\n".format(round(p1[0],3),
 		round((p1[1]+p1[2])/2,4),round(p2[0],3),round((p2[1]+p2[2])/2,3)))
 	print("EFOSC2 PU Instrumental Polarisation: ")
-	print("""{0}(±{1})*cos(2x + {2}(±{3}))\n""".format(round(p1[0],3),round(
+	print("{0}(±{1})*cos(2x + {2}(±{3}))\n".format(round(p1[0],3),round(
 		(p1[1]+p1[2])/2,4),round((p2[0]-90),3),round((p2[1]+p2[2])/2,3)))
 	print("Gelman-Rubin Statistic (Amplitude):",p1_gr,p1_conv)
 	print("Gelman-Rubin Statistic (Angle Offset):",p2_gr,p2_conv,"\n")
@@ -660,9 +660,8 @@ def efosc2_pol(folder_path,wave_band,par_ang,gain):
 		extra_data_45 = beam_data(extra_beam[2])
 		extra_data_67 = beam_data(extra_beam[3])
 		
-	except FileNotFoundError as e:
-		print('Cannot find the folder or files you are looking for')
-		sys.exit()
+	except FileNotFoundError:
+		raise FileNotFoundError('Cannot find the folder or files')
 
 	# Creates target list of sources
 	target_list = []
@@ -676,8 +675,7 @@ def efosc2_pol(folder_path,wave_band,par_ang,gain):
 		or len(ordin_data_67.x)) != (len(extra_data_0.x) or
 		len(extra_data_22.x) or len(extra_data_45.x) or len(extra_data_67.x)):
 		
-		print('One or more data files have unequal numbers of sources!')
-		sys.exit()
+		raise ValueError('One or more files have unequal number of sources!')
 
 	# Calculate and store flux errors
 	ordin_fluxerr_0 = flux_error(ordin_data_0,target_list,gain)
@@ -730,8 +728,7 @@ def efosc2_pol(folder_path,wave_band,par_ang,gain):
 			mirror_props_file,0.793,par_ang,q_values,u_values)
 			
 	else:
-		print("Code does not calibrate for this filter! Please check input!!")
-		sys.exit()
+		raise ValueError("Code does not calibrate for this filter.")
 
 	# Calculate real value of p
 	real_p = []

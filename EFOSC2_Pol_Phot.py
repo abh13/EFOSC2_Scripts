@@ -78,10 +78,8 @@ def efosc2_pol_phot(folder_path,apermul,fwhm):
 			hdulist = fits.open(files[k])
 			image_data = hdulist[0].data
 			
-		except FileNotFoundError as e:
-			print("Cannot find the fits file(s) you are looking for!")
-			print("Please check the input!")
-			sys.exit()
+		except FileNotFoundError:
+			raise FileNotFoundError("Cannot find the input fits file(s).")
 		
 		# Remove bad pixels and mask edges
 		image_data[image_data > 60000] = 0
@@ -113,12 +111,10 @@ def efosc2_pol_phot(folder_path,apermul,fwhm):
 		sources_e = daofind_e(image_data[462:492,535:565])
 		
 		if (sources_o is None or sources_e is None):
-			print("No source detected in",ang_dec[k],"degree image")
-			sys.exit()
+			raise ValueError("No source detected in",ang_dec[k],"deg image")
 			
 		if len(sources_o) != len(sources_e):
-			print("Unequal number of sources detected in o and e images!")
-			sys.exit()
+			raise ValueError("Unequal number of sources in o and e images!")
 		
 		glob_bgm = [go_bmean,ge_bmean]
 		glob_bgerr = [go_bstd,ge_bstd]
