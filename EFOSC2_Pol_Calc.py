@@ -214,9 +214,11 @@ def efosc2_cal_mm(folder_path,standard_star_file,mirror_props_file,waveband,
 
 	# Print out numerical values for the two mirror matrices
 	print("Mirror Matrix (0 degrees):")
-	print(MirrorMatrixComplex(ni(waveband),ki(waveband),np.radians(0)))
+	print(MirrorMatrixComplex(params_best[0]*ni(waveband),
+		params_best[0]*ki(waveband),np.radians(0)))
 	print("\nMirror Matrix (45 degrees):")
-	print(MirrorMatrixComplex(ni(waveband),ki(waveband),np.radians(45)),"\n")
+	print(MirrorMatrixComplex(params_best[0]*ni(waveband),
+		params_best[0]*ki(waveband),np.radians(45)),"\n")
 
 	# Plot the most probable fit and save the model for the instrumental
 	# polarisation	
